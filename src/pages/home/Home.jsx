@@ -8,8 +8,18 @@ import {
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getPost } from "../../redux/slice/postSlice";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPost());
+  }, [dispatch]);
+  const posts = useSelector((state) => state.postList.postList);
+  console.log(posts);
+
   return (
     <div>
       <h1>Blog</h1>
