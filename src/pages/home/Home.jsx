@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid2";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getPost,
+  getPosts,
   selectAllPosts,
   selectStatus,
 } from "../../redux/slice/postSlice";
@@ -11,7 +11,7 @@ import CartItem from "../../components/CartItem";
 export default function Home() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getPost());
+    dispatch(getPosts());
   }, [dispatch]);
   const posts = useSelector(selectAllPosts);
   const status = useSelector(selectStatus);
