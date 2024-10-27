@@ -14,7 +14,7 @@ export const postSlice = createSlice({
     });
     builder.addCase(getPost.fulfilled, (state, action) => {
       state.status = "idle";
-      state.postList = action.payload.articles;
+      state.postList = action.payload;
     });
     builder.addCase(getPost.rejected, (state) => {
       state.status = "error";
@@ -24,11 +24,7 @@ export const postSlice = createSlice({
 export const getPost = createAsyncThunk(
   "posts/getPost",
   async (_, rejectWithValue) => {
-    const response = await axios.get(
-      `${getEnv(
-        "VITE_SERVER_API"
-      )}/top-headlines?sources=techcrunch&apiKey=${getEnv("VITE_API_KEY")}`
-    );
+    const response = await axios.get(`${getEnv("VITE_SERVER_API")}/posts`);
     const data = await response.data;
     if (response.status !== 200) {
       return rejectWithValue("request Error");
