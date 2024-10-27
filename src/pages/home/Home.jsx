@@ -1,155 +1,42 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Container,
-  Typography,
-} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost } from "../../redux/slice/postSlice";
+import {
+  getPost,
+  selectAllPosts,
+  selectStatus,
+} from "../../redux/slice/postSlice";
+import CartItem from "../../components/CartItem";
 
 export default function Home() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPost());
   }, [dispatch]);
-  const posts = useSelector((state) => state.postList.postList);
-  console.log(posts);
-
+  const posts = useSelector(selectAllPosts);
+  const status = useSelector(selectStatus);
+  if (status === "error") {
+    return <h2>Error</h2>;
+  }
   return (
     <div>
       <h1>Blog</h1>
       <Grid container spacing={2}>
-        <Grid size={4}>
-          <Card sx={{ maxWidth: 345 }}>
-            <CardMedia
-              sx={{ height: 140 }}
-              image="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid size={4}>
-          <Card sx={{ maxWidth: 345 }}>
-            <CardMedia
-              sx={{ height: 140 }}
-              image="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid size={4}>
-          <Card sx={{ maxWidth: 345 }}>
-            <CardMedia
-              sx={{ height: 140 }}
-              image="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid size={4}>
-          <Card sx={{ maxWidth: 345 }}>
-            <CardMedia
-              sx={{ height: 140 }}
-              image="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
-        </Grid>{" "}
-        <Grid size={4}>
-          <Card sx={{ maxWidth: 345 }}>
-            <CardMedia
-              sx={{ height: 140 }}
-              image="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
-        </Grid>{" "}
-        <Grid size={4}>
-          <Card sx={{ maxWidth: 345 }}>
-            <CardMedia
-              sx={{ height: 140 }}
-              image="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
-            </CardActions>
-          </Card>
-        </Grid>
+        {status === "pending" ? (
+          <h2>loading</h2>
+        ) : (
+          posts.map(({ id, title }) => (
+            <Grid key={id} size={4}>
+              <CartItem
+                title={title}
+                id={id}
+                image={
+                  "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"
+                }
+              ></CartItem>
+            </Grid>
+          ))
+        )}
       </Grid>
     </div>
   );

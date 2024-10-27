@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Post() {
   return (
@@ -15,6 +16,7 @@ export default function Post() {
         Deserunt, similique. Maxime facilis tempore fuga laboriosam alias modi
         delectus asperiores?
       </p>
+      <Link to="/">quay lai</Link>
     </>
   );
 }

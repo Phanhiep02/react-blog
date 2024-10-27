@@ -25,7 +25,7 @@ export const getPost = createAsyncThunk(
   "posts/getPost",
   async (_, rejectWithValue) => {
     const response = await axios.get(`${getEnv("VITE_SERVER_API")}/posts`);
-    const data = await response.data;
+    const data = await response.data.posts;
     if (response.status !== 200) {
       return rejectWithValue("request Error");
     }
@@ -35,3 +35,5 @@ export const getPost = createAsyncThunk(
     return data;
   }
 );
+export const selectAllPosts = (state) => state.posts.postList;
+export const selectStatus = (state) => state.posts.status;
