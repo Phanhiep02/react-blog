@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { getPost, selectStatus } from "../../redux/slice/postSlice";
 
 export default function Post() {
@@ -24,8 +24,11 @@ export default function Post() {
     <>
       <h1>{post.title}</h1>
       <Box>
-        <span>Post by : hoang an</span>
-        <span>At: 01/01/2024</span>
+        <span>
+          Post by :{" "}
+          <Link to={`author/${post.userId}`}> {post?.user?.username}</Link>
+        </span>
+        <span> view: {post.views}</span>
       </Box>
       <p>{post.body}</p>
 

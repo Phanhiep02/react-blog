@@ -52,14 +52,21 @@ export const getPost = createAsyncThunk(
     const response = await axios.get(
       `${getEnv("VITE_SERVER_API")}/posts/${id}`
     );
-    const data = await response.data;
     if (response.status !== 200) {
       return rejectWithValue("request Error");
     }
+    const post = await response.data;
 
-    console.log(data);
-
-    return data;
+    // call api để lấy thông tin user
+    const responseUser = await axios.get(
+      // lấy userId bằng cách xem response ở f12
+      `${getEnv("VITE_SERVER_API")}/user/${post.userId}`
+    );
+    if (response.status === 200) {
+      const user = await responseUser.data;
+      post.user = user;
+    }
+    return post;
   }
 );
 export const selectAllPosts = (state) => state.posts.postList;
