@@ -35,6 +35,7 @@ export const postSlice = createSlice({
 export const getPosts = createAsyncThunk(
   "posts/getPosts",
   async (query = "", rejectWithValue) => {
+    // api search dựa theo api
     let queryString = "";
     if (query) {
       queryString = `/search?q=${query}`;

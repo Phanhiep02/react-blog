@@ -26,6 +26,7 @@ export default function SearchForm() {
   const handleClick = () => {
     setKeyword("");
   };
+  // xử lí search
   useEffect(() => {
     dispatch(getPosts(keyword));
   }, [keyword, dispatch]);
